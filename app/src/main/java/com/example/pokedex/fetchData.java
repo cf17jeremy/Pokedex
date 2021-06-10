@@ -6,8 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
-//import com.ahmadrosid.svgloader.SvgLoader;
-//import com.squareup.picasso.Picasso;
+import com.ahmadrosid.svgloader.SvgLoader;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +29,7 @@ public class fetchData extends AsyncTask<Void, Void, Void> {
     protected String results = "";
     protected ArrayList<String> strTypes; // Create an ArrayList object
     protected String pokSearch;
+    protected String pokId;
 
     public fetchData(String pokSearch) {
         this.pokSearch = pokSearch;
@@ -43,7 +44,6 @@ public class fetchData extends AsyncTask<Void, Void, Void> {
             Log.i("logtest", "https://pokeapi.co/api/v2/pokemon/" + pokSearch);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
             // Read API results
             InputStream inputStream = httpURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -69,47 +69,49 @@ public class fetchData extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid){
         JSONObject jObject = null;
         String img = "";
+        String imgShiny = "";
         String typeName = "";
         String typeObj="";
 
         try {
             jObject = new JSONObject(data);
 
+            pokId = jObject.getString("id");
             // Get JSON name, height, weight
             results += "Name: " + jObject.getString("name").toUpperCase() + "\n" +
-                        "Height: " + jObject.getString("height") + "\n" +
-                        "Weight: " + jObject.getString("weight");
+                    "Height: " + jObject.getString("height") + "\n" +
+                    "Weight: " + jObject.getString("weight");
 
             // Get img SVG
-//            JSONObject sprites = new JSONObject(jObject.getString("sprites"));
-//            JSONObject other = new JSONObject(sprites.getString("other"));
-//            JSONObject dream_world = new JSONObject(other.getString("dream_world"));
-//            img  = dream_world.getString("front_default");
+            JSONObject sprites = new JSONObject(jObject.getString("sprites"));
+            JSONObject other = new JSONObject(sprites.getString("other"));
+            JSONObject dream_world = new JSONObject(other.getString("dream_world"));
+            img = dream_world.getString("front_default");
+            imgShiny = sprites.getString("front_shiny");
 
             // Get type/types
-//            JSONArray types = new JSONArray(jObject.getString("types"));
-//            for(int i=0; i<types.length(); i++){
-//                JSONObject type = new JSONObject(types.getString(i));
-//                JSONObject type2  = new JSONObject(type.getString("type"));
-//                strTypes.add(type2.getString("name"));
-//            }
+            JSONArray types = new JSONArray(jObject.getString("types"));
+            for (int i = 0; i < types.length(); i++) {
+                JSONObject type = new JSONObject(types.getString(i));
+                JSONObject type2 = new JSONObject(type.getString("type"));
+                strTypes.add(type2.getString("name"));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
         // Set info
         MainActivity.txtDisplay.setText(this.results);
+        Picasso.get().load(imgShiny).into(MainActivity.imgpokshiny);
+        // Set main img
+        SvgLoader.pluck()
+                .with(MainActivity.act)
+                .load(img, MainActivity.imgPok);
 
-//        // Set main img
-//        SvgLoader.pluck()
-//                .with(MainActivity.act)
-//                .load(img, MainActivity.imgPok);
-//
-//        // Set img types
-//        for(int i=0; i<strTypes.size(); i++){
-//            MainActivity.imgType[i].setImageResource(MainActivity.act.getResources().getIdentifier(strTypes.get(i), "drawable", MainActivity.act.getPackageName()));
-//        }
-
+        // Set img types
+        for(int i=0; i<strTypes.size(); i++){
+            MainActivity.imgType[i].setImageResource(MainActivity.act.getResources().getIdentifier(strTypes.get(i), "drawable", MainActivity.act.getPackageName()));
+        }
+        MainActivity.pokId = Integer.parseInt(pokId);
     }
 }

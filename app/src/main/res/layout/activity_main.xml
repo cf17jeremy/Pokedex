@@ -90,6 +90,17 @@
         app:srcCompat="@color/white" />
 
     <ImageView
+        android:id="@+id/shiny"
+        android:layout_width="64dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/imgPok"
+        app:layout_constraintEnd_toEndOf="@+id/txtDisplay"
+        app:srcCompat="@color/white" />
+
+    <ImageView
         android:id="@+id/imgType1"
         android:layout_width="45dp"
         android:layout_height="45dp"
@@ -111,26 +122,65 @@
         app:layout_constraintTop_toBottomOf="@+id/txtDisplay"
         app:srcCompat="@drawable/arrows" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnRight"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="35dp"
-        app:backgroundTint="@color/cardview_shadow_end_color"
-        app:iconTint="@color/cardview_shadow_end_color"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"
-        app:rippleColor="@color/cardview_shadow_end_color" />
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="77dp"
 
-    <Button
-        android:id="@+id/btnLeft"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="35dp"
-        app:backgroundTint="@color/cardview_shadow_end_color"
-        app:iconTint="@color/cardview_shadow_end_color"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="38dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3"
-        app:rippleColor="@color/cardview_shadow_end_color" />
+        app:srcCompat="@drawable/flecha" />
+
+    <ImageButton
+        android:id="@+id/btnLeft"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="38dp"
+        android:background="@android:color/transparent"
+        android:rotationY="180"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:srcCompat="@drawable/flecha" />
+
+    <ImageButton
+        android:id="@+id/btnUp"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@android:color/transparent"
+        android:rotation="-90"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:srcCompat="@drawable/flecha" />
+
+    <ImageButton
+        android:id="@+id/btnDown"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@android:color/transparent"
+        android:rotation="90"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:srcCompat="@drawable/flecha" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
